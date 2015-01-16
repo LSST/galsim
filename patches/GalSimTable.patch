@@ -1,7 +1,7 @@
-diff --git a/patches/../ups/GalSim.table b/patches/../ups/GalSim.table
+diff --git a/ups/GalSim.table b/ups/GalSim.table
 index 375c2d9..8e8c486 100644
---- a/patches/../ups/GalSim.table
-+++ b/patches/../ups/GalSim.table
+--- a/ups/GalSim.table
++++ b/ups/GalSim.table
 @@ -6,4 +6,5 @@ setupRequired(tmv)
  
  envPrepend(PYTHONPATH, ${PRODUCT_DIR})
