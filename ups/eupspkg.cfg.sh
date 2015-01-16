@@ -5,6 +5,8 @@ build(){
     echo $TMV_DIR
     echo 'SFD DYLD_LIBRARY_PATH'
     echo $DYLD_LIBRARY_PATH
+    echo 'PREFIX'
+    echo $PREFIX
 
     default_build
 }
