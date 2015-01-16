@@ -1,0 +1,10 @@
+diff --git a/patches/../ups/GalSim.table b/patches/../ups/GalSim.table
+index 375c2d9..8e8c486 100644
+--- a/patches/../ups/GalSim.table
++++ b/patches/../ups/GalSim.table
+@@ -6,4 +6,5 @@ setupRequired(tmv)
+ 
+ envPrepend(PYTHONPATH, ${PRODUCT_DIR})
+ envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
++envPrepend(DYLD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
+ envPrepend(PATH, ${PRODUCT_DIR}/bin)
