@@ -1,3 +1,10 @@
-echo 'SFD TMV_DIR ',$TMV_DIR
-echo 'SFD DYLD_LIBRARY_PATH ',$DYLD_LIBRARY_PATH
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR"/lib PREFIX="$PREFIX
+
+build(){
+    echo 'SFD TMV_DIR'
+    echo $TMV_DIR
+    echo 'SFD DYLD_LIBRARY_PATH'
+    echo $DYLD_LIBRARY_PATH
+
+    default_build
+}
