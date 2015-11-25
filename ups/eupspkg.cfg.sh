@@ -1,7 +1,8 @@
-export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"
 
 pathToPython=$(which python)
 export DYLD_FALLBACK_LIBRARY_PATH="${pathToPython%bin/python}/lib"
+
+export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include FLAGS=-Wl,-rpath="$DYLD_FALLBACK_LIBRARY_PATH
 
 build(){
     echo 'sfd dyld'
