@@ -2,6 +2,8 @@
 pathToPython=$(which python)
 export DYLD_FALLBACK_LIBRARY_PATH="${pathToPython%bin/python}/lib"
 
+export DYLD_FALLBACK_LIBRARY_PATH=/Users/noldor/physics/buildGalSimElCapitan/lsstsw/stack/DarwinX86/boost/1.59.lsst5/lib/:$DYLD_FALLBACK_LIBRARY_PATH
+
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include FLAGS='-Wl,-rpath="$DYLD_FALLBACK_LIBRARY_PATH"'"
 
 build(){
