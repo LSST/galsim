@@ -3,7 +3,7 @@ pathToPython=$(which python)
 pythonLibPath="${pathToPython%bin/python}/lib"
 export LSST_LIBRARY_PATH=$pythonLibPath:$LSST_LIBRARY_PATH
 
-export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python  EXTRA_INCLUDE_PATH="$TMV_DIR"/include:"$BOOST_DIR"/include BOOST_DIR="$BOOST_DIR" FFTW_DIR="$FFTW_DIR" EXTRA_LIB_PATH="$TMV_DIR"/lib:"$BOOST_DIR"/lib"
+export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python  EXTRA_INCLUDE_PATH="$TMV_DIR"/include:"$BOOST_DIR"/include BOOST_DIR="$BOOST_DIR" FFTW_DIR="$FFTW_DIR" EXTRA_LIB_PATH="$LSST_LIBRARY_PATH
 
 build(){
     echo 'sfd dyld'
