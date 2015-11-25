@@ -3,6 +3,13 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="
 pathToPython=$(which python)
 export DYLD_FALLBACK_LIBRARY_PATH="${pathToPython%bin/python}/lib"
 
+build(){
+    echo 'sfd dyld'
+    echo $DYLD_FALLBACK_LIBRARY_PATH
+    echo 'done with sfd dyld'
+    default_build
+}
+
 install()
 {
     default_install
