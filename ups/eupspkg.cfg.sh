@@ -7,6 +7,7 @@ build(){
     echo 'sfd dyld'
     echo $DYLD_FALLBACK_LIBRARY_PATH
     echo 'done with sfd dyld'
+    #sfd
     default_build
 }
 
