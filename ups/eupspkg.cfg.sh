@@ -12,7 +12,9 @@ build(){
     echo 'sfd SCONS'
     echo $SCONSFLAGS
     echo 'done with sfd SCONS'
+    install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
     default_build
+    install_name_tool -id @rpath/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
 }
 
 install()
