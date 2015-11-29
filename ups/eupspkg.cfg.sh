@@ -6,20 +6,22 @@ export LSST_LIBRARY_PATH=$pythonLibPath:$LSST_LIBRARY_PATH
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python  EXTRA_INCLUDE_PATH="$TMV_DIR"/include:"$BOOST_DIR"/include BOOST_DIR="$BOOST_DIR" FFTW_DIR="$FFTW_DIR" EXTRA_LIB_PATH="$LSST_LIBRARY_PATH" PYTHON="$pathToPython
 
 build(){
-    echo 'sfd dyld'
-    echo $DYLD_FALLBACK_LIBRARY_PATH
-    echo 'done with sfd dyld'
-    echo 'sfd SCONS'
-    echo $SCONSFLAGS
-    echo 'done with sfd SCONS'
-    declare -a arr
-    arr=( $(otool -L $BOOST_DIR/lib/libboost_python.dylib) )
-    echo 'sfd id'
-    init_id=${arr[1]}
-    echo $init_id
-    #install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
+
+    if [[ $OSTYPE == darwin* ]]; then
+        declare -a arr
+        arr=( $(otool -L $BOOST_DIR/lib/libboost_python.dylib) )
+        echo 'sfd id'
+        init_id=${arr[1]}
+        echo $init_id
+        install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
+    fi
+
     default_build
-    #install_name_tool -id @rpath/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
+
+    if [[ $OSTYPE == darwin* ]]; then
+        install_name_tool -id $init_id $BOOST_DIR/lib/libboost_python.dylib
+    fi
+
 }
 
 install()
