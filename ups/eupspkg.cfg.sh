@@ -15,7 +15,7 @@ build(){
     declare -a arr
     arr=( $(otool -L $BOOST_DIR/lib/libboost_python.dylib) )
     echo 'sfd id'
-    init_id=arr[1]
+    init_id=${arr[1]}
     echo $init_id
     #install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
     default_build
