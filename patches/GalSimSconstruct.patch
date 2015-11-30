@@ -6,7 +6,7 @@ index 0a9aec1..7c00296 100644
  
      # Add some extra paths
      AddExtraPaths(env)
-+    AddRPATH(env, LSST_LIBRARY_PATH, prepend=True)
++    AddRPATH(env, env['LSST_LIBRARY_PATH'], prepend=True)
  
      # Figure out what kind of compiler we are dealing with
      GetCompilerVersion(env)
