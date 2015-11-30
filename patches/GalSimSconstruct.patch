@@ -15,7 +15,7 @@ index 0a9aec1..1788772 100644
  { Py_InitModule("check_python", Methods); }
  """
 +    print "sfd python RPATH"
-+    print config.evn['RPATH']
++    print config.env['RPATH']
      config.Message('Checking if we can build against Python... ')
  
      # First check the python include directory -- see if we can compile the module.
