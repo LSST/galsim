@@ -1,5 +1,5 @@
 diff --git a/SConstruct b/SConstruct
-index 0a9aec1..73bdb81 100644
+index 0a9aec1..2d248fd 100644
 --- a/SConstruct
 +++ b/SConstruct
 @@ -82,6 +82,7 @@ opts.Add('TMV_DIR','Explicitly give the tmv prefix','')
@@ -10,13 +10,14 @@ index 0a9aec1..73bdb81 100644
  
  opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
           'Extra paths for header files (separated by : if more than 1)',
-@@ -1610,6 +1611,10 @@ def DoConfig(env):
+@@ -1610,6 +1611,11 @@ def DoConfig(env):
  
      # Add some extra paths
      AddExtraPaths(env)
 +    print "sfd adding LSST_LIBRARY_PATH to rpath"
 +    print env['LSST_LIBRARY_PATH']
 +    AddRPATH(env, env['LSST_LIBRARY_PATH'], prepend=True)
++    print env['RPATH']
 +    print "sfd done adding to rpath"
  
      # Figure out what kind of compiler we are dealing with
