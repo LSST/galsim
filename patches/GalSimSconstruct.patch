@@ -1,8 +1,16 @@
 diff --git a/SConstruct b/SConstruct
-index 0a9aec1..7c00296 100644
+index 0a9aec1..c3111c2 100644
 --- a/SConstruct
 +++ b/SConstruct
-@@ -1610,6 +1610,7 @@ def DoConfig(env):
+@@ -82,6 +82,7 @@ opts.Add('TMV_DIR','Explicitly give the tmv prefix','')
+ opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
+ opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
+ opts.Add('BOOST_DIR','Explicitly give the boost prefix','')
++opts.Add('LSST_LIBRARY_PATH', 'List of directories containing libraries to build against')
+ 
+ opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
+          'Extra paths for header files (separated by : if more than 1)',
+@@ -1610,6 +1611,7 @@ def DoConfig(env):
  
      # Add some extra paths
      AddExtraPaths(env)
