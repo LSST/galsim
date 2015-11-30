@@ -2,10 +2,11 @@ diff --git a/ups/GalSim.table b/ups/GalSim.table
 index 375c2d9..8e8c486 100644
 --- a/ups/GalSim.table
 +++ b/ups/GalSim.table
-@@ -6,4 +6,6 @@ setupRequired(tmv)
+@@ -6,4 +6,7 @@ setupRequired(tmv)
  
  envPrepend(PYTHONPATH, ${PRODUCT_DIR})
  envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
 +envPrepend(DYLD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
++envPrepend(LSST_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
 +envPrepend(PYTHONPATH, ${PRODUCT_DIR}/lib/python)
  envPrepend(PATH, ${PRODUCT_DIR}/bin)
