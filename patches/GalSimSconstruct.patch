@@ -1,5 +1,5 @@
 diff --git a/SConstruct b/SConstruct
-index 0a9aec1..2d248fd 100644
+index 0a9aec1..1788772 100644
 --- a/SConstruct
 +++ b/SConstruct
 @@ -82,6 +82,7 @@ opts.Add('TMV_DIR','Explicitly give the tmv prefix','')
@@ -10,7 +10,16 @@ index 0a9aec1..2d248fd 100644
  
  opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
           'Extra paths for header files (separated by : if more than 1)',
-@@ -1610,6 +1611,11 @@ def DoConfig(env):
+@@ -1048,6 +1049,8 @@ static PyMethodDef Methods[] = {
+ PyMODINIT_FUNC initcheck_python(void)
+ { Py_InitModule("check_python", Methods); }
+ """
++    print "sfd python RPATH"
++    print config.evn['RPATH']
+     config.Message('Checking if we can build against Python... ')
+ 
+     # First check the python include directory -- see if we can compile the module.
+@@ -1610,6 +1613,11 @@ def DoConfig(env):
  
      # Add some extra paths
      AddExtraPaths(env)
