@@ -1,0 +1,12 @@
+diff --git a/SConstruct b/SConstruct
+index 0a9aec1..7c00296 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -1610,6 +1610,7 @@ def DoConfig(env):
+ 
+     # Add some extra paths
+     AddExtraPaths(env)
++    AddRPATH(env, LSST_LIBRARY_PATH, prepend=True):
+ 
+     # Figure out what kind of compiler we are dealing with
+     GetCompilerVersion(env)
