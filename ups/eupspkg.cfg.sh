@@ -6,6 +6,12 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 "/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"\
 " FALLBACK="$pathToPythonLib
 
+build(){
+
+    install_name_tool -id @rpath/libpython2.7.dylib $pathToPythonLib/libpython2.7.dylib
+
+}
+
 install()
 {
     default_install
