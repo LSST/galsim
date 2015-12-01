@@ -1,7 +1,7 @@
 diff --git a/SConstruct b/SConstruct
 index
 --- a/SConstruct	2015-11-30 20:15:54.000000000 -0800
-+++ b/SConstruct_corrected	2015-11-30 20:36:09.000000000 -0800
++++ b/SConstruct_corrected	2015-11-30 21:19:02.000000000 -0800
 @@ -82,6 +82,7 @@
  opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
  opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
@@ -32,4 +32,13 @@ index
 +
      # Add some extra paths
      AddExtraPaths(env)
+ 
+@@ -1666,7 +1676,7 @@
+             'CheckBoostPython' : CheckBoostPython ,
+             'CheckPythonExcept' : CheckPythonExcept ,
+             })
+-        DoPyChecks(config)
++        #DoPyChecks(config)
+         pyenv = config.Finish()
+         env['final_messages'] = pyenv['final_messages']
  
