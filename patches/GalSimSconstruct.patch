@@ -1,20 +1,34 @@
 diff --git a/SConstruct b/SConstruct
 index
---- a/SConstruct
-+++ b/SConstruct
+--- a/SConstruct	2015-11-30 20:15:54.000000000 -0800
++++ b/SConstruct_corrected	2015-11-30 20:36:09.000000000 -0800
 @@ -82,6 +82,7 @@
  opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
  opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
  opts.Add('BOOST_DIR','Explicitly give the boost prefix','')
-+opts.Add('DYLD_FALLBACK_LIBRARY_PATH', 'Set DYLD_FALLBACK_LIBRARY_PATH')
++opts.Add('FALLBACK', 'Set DYLD_FALLBACK_LIBRARY_PATH')
  
  opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
           'Extra paths for header files (separated by : if more than 1)',
-@@ -1608,6 +1609,8 @@
+@@ -1050,6 +1051,10 @@
+ """
+     config.Message('Checking if we can build against Python... ')
+ 
++    print "sfd show dyld"
++    print config.env['DYLD_FALLBACK_LIBRARY_PATH']
++    print "done showing sfd dyld"
++
+     # First check the python include directory -- see if we can compile the module.
+     source_file2 = "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
+     result, py_inc = TryScript(config,source_file2,python)
+@@ -1608,6 +1613,11 @@
      Configure the system
      """
  
-+    env.PrependUnique(DYLD_FALLBACK_LIBRARY_PATH=env['DYLD_FALLBACK_LIBRARY_PATH'])
++    env.PrependUnique(DYLD_FALLBACK_LIBRARY_PATH=env['FALLBACK'])
++    print "sfd dyld"
++    print env['DYLD_FALLBACK_LIBRARY_PATH']
++    print "done with sfd dyld"
 +
      # Add some extra paths
      AddExtraPaths(env)
