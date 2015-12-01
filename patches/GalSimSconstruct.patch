@@ -1,43 +1,21 @@
 diff --git a/SConstruct b/SConstruct
-index 0a9aec1..c6280a1 100644
+index
 --- a/SConstruct
 +++ b/SConstruct
-@@ -82,6 +82,7 @@ opts.Add('TMV_DIR','Explicitly give the tmv prefix','')
+@@ -82,6 +82,7 @@
  opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
  opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
  opts.Add('BOOST_DIR','Explicitly give the boost prefix','')
-+opts.Add('LSST_LIBRARY_PATH', 'List of directories containing libraries to build against')
++opts.Add('DYLD_FALLBACK_LIBRARY_PATH', 'Set DYLD_FALLBACK_LIBRARY_PATH')
  
  opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
           'Extra paths for header files (separated by : if more than 1)',
-@@ -1048,6 +1049,8 @@ static PyMethodDef Methods[] = {
- PyMODINIT_FUNC initcheck_python(void)
- { Py_InitModule("check_python", Methods); }
- """
-+    print "sfd python RPATH"
-+    print config.env['RPATH']
-     config.Message('Checking if we can build against Python... ')
+@@ -1608,6 +1609,8 @@
+     Configure the system
+     """
  
-     # First check the python include directory -- see if we can compile the module.
-@@ -1167,6 +1170,9 @@ PyMODINIT_FUNC initcheck_python(void)
-     if py_libdir not in py_libdirs: 
-         py_libdirs.append(py_libdir)
- 
-+    print "sfd py_libdirs"
-+    print py_libdirs
++    env.PrependUnique(DYLD_FALLBACK_LIBRARY_PATH=env['DYLD_FALLBACK_LIBRARY_PATH'])
 +
-     # Look in each of these directories for a valid library file to link to:
-     for py_libfile in py_libfiles:
-         for py_libdir in py_libdirs:
-@@ -1610,6 +1616,11 @@ def DoConfig(env):
- 
      # Add some extra paths
      AddExtraPaths(env)
-+    print "sfd adding LSST_LIBRARY_PATH to rpath"
-+    print env['LSST_LIBRARY_PATH']
-+    AddRPATH(env, env['LSST_LIBRARY_PATH'], prepend=True)
-+    print env['RPATH']
-+    print "sfd done adding to rpath"
  
-     # Figure out what kind of compiler we are dealing with
-     GetCompilerVersion(env)
