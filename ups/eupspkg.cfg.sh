@@ -14,6 +14,8 @@ build(){
     echo "SFD LSSTLIB"
     echo $LSST_LIBRARY_PATH
 
+    install_name_tool -id @rpath/libpython2.7.dylib $pathToPythonLib/libpython2.7.dylib
+
     default_build
 
 }
