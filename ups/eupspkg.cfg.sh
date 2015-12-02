@@ -8,6 +8,15 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 " FALLBACK="$pathToPythonLib\
 " LINKFLAGS=-Wl,-rpath="$pathToPythonLib":"$FFTW_DIR"/lib"
 
+build(){
+
+    echo "SFD FFTW"
+    echo $FFTW_DIR
+
+    default_build
+
+}
+
 install()
 {
     default_install
