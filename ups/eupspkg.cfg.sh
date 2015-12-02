@@ -7,7 +7,7 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 " FFTW_DIR="$FFTW_DIR\
 " FALLBACK="$pathToPythonLib\
 " PYTHON="$pathToPython\
-" LINKFLAGS=-Wl,-rpath,"$LSST_LIBRARY_PATH",-rpath,"$pathToPythonLib
+" LINKFLAGS=-Wl,-rpath,"$pathToPythonLib
 
 build(){
 
