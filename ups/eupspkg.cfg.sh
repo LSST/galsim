@@ -8,8 +8,8 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 
 build(){
 
-    install_name_tool -id @rpath/libpython2.7.dylib $pathToPythonLib/libpython2.7.dylib
-    install_name_tool -add_rpath $pathToPythonLib $BOOST_DIR/lib/libboost_python.dylib
+    export RPATH=$pathToPythonLib:$RPATH
+    export RPATH=$BOOST_DIR/lib:$RPATH
 
 }
 
