@@ -6,7 +6,6 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 "/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"\
 " FFTW_DIR="$FFTW_DIR\
 " FALLBACK="$pathToPythonLib\
-" PYTHON="$pathToPython\
 " LINKFLAGS=-Wl,-rpath,"$pathToPythonLib
 
 build(){
