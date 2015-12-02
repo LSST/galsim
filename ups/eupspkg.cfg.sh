@@ -10,8 +10,8 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 
 build(){
 
-    echo "SFD FFTW"
-    echo $FFTW_DIR
+    echo "SFD LSSTLIB"
+    echo $LSST_LIBRARY_PATH
 
     default_build
 
