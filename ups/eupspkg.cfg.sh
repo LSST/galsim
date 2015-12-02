@@ -25,8 +25,8 @@ install()
     default_install
     cp -r include $PREFIX/
 
-    if [[ $OSTYPE == darwin* ]]; then
-        install_name_tool -add_rpath $pathToPythonLib "$PREFIX"/lib/python/galsim/_galsim.so
-        install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib "$PREFIX"/lib/python/galsim/_galsim.so
-    fi
+    #if [[ $OSTYPE == darwin* ]]; then
+        #install_name_tool -add_rpath $pathToPythonLib "$PREFIX"/lib/python/galsim/_galsim.so
+        #install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib "$PREFIX"/lib/python/galsim/_galsim.so
+    #fi
 }
