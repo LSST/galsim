@@ -6,7 +6,7 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 "/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"\
 " FFTW_DIR="$FFTW_DIR\
 " FALLBACK="$pathToPythonLib\
-" LINKFLAGS=-Wl,-rpath,"$pathToPythonLib
+" LINKFLAGS=-Wl,-rpath,"$BOOST_DIR/lib
 
 build(){
 
@@ -14,7 +14,7 @@ build(){
     echo $LSST_LIBRARY_PATH
 
     install_name_tool -id @rpath/libpython2.7.dylib $pathToPythonLib/libpython2.7.dylib
-    install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
+    #install_name_tool -id $BOOST_DIR/lib/libboost_python.dylib $BOOST_DIR/lib/libboost_python.dylib
 
     default_build
 
