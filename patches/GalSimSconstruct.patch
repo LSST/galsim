@@ -21,22 +21,21 @@ index
      # First check the python include directory -- see if we can compile the module.
      source_file2 = "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
      result, py_inc = TryScript(config,source_file2,python)
-@@ -1572,6 +1577,14 @@
+@@ -1572,6 +1577,13 @@
  def DoPyChecks(config):
      # These checks are only relevant for the pysrc compilation:
  
 +    cmd = "export SFD_SILLY_PATH=%s" % config.env['FALLBACK']
 +    print "sfd in checks executing"
 +    print cmd
-+    os.system(cmd)
-+
++    os.enviorn['SFD_SILLY_PATH'] = config.env['FALLBACK']
 +    print "sfd DYLD in checks"
 +    os.system("echo $SFD_SILLY_PATH")
 +    print "sfd done with DYLD in checks"
      config.CheckPython()
      config.CheckPyTMV()
      config.CheckNumPy()
-@@ -1608,6 +1621,14 @@
+@@ -1608,6 +1620,14 @@
      Configure the system
      """
  
