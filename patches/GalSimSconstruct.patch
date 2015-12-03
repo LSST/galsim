@@ -1,7 +1,7 @@
 diff --git a/SConstruct b/SConstruct
 index
 --- a/SConstruct	2015-11-30 20:15:54.000000000 -0800
-+++ b/SConstruct	2015-12-02 20:02:36.000000000 -0800
++++ b/SConstruct	2015-12-02 20:06:32.000000000 -0800
 @@ -82,6 +82,7 @@
  opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
  opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
@@ -31,12 +31,14 @@ index
      config.CheckPython()
      config.CheckPyTMV()
      config.CheckNumPy()
-@@ -1608,6 +1616,12 @@
+@@ -1608,6 +1616,14 @@
      Configure the system
      """
  
-+    env.PrependUnique(DYLD_FALLBACK_LIBRARY_PATH=env['FALLBACK'])
-+    os.system("export DYLD_FALLBACK_LIBRARY_PATH=%s" % env['FALLBACK'])
++    cmd = "export DYLD_FALLBACK_LIBRARY_PATH=%s" % env['FALLBACK']
++    print "sfd executing"
++    print cmd
++    os.system(cmd)
 +    print "sfd dyld has been set"
 +    os.system("echo $DYLD_FALLBACK_LIBRARY_PATH")
 +    print "done with sfd dyld has been set"
