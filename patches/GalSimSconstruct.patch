@@ -25,13 +25,13 @@ index
  def DoPyChecks(config):
      # These checks are only relevant for the pysrc compilation:
  
-+    cmd = "export DYLD_FALLBACK_LIBRARY_PATH=%s" % config.env['FALLBACK']
++    cmd = "export SFD_SILLY_PATH=%s" % config.env['FALLBACK']
 +    print "sfd in checks executing"
 +    print cmd
 +    os.system(cmd)
 +
 +    print "sfd DYLD in checks"
-+    os.system("echo $DYLD_FALLBACK_LIBRARY_PATH")
++    os.system("echo $SFD_SILLY_PATH")
 +    print "sfd done with DYLD in checks"
      config.CheckPython()
      config.CheckPyTMV()
