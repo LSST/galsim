@@ -1,7 +1,7 @@
 diff --git a/SConstruct b/SConstruct
 index
 --- a/SConstruct	2015-11-30 20:15:54.000000000 -0800
-+++ b/SConstruct	2015-12-02 19:53:11.000000000 -0800
++++ b/SConstruct	2015-12-02 19:56:32.000000000 -0800
 @@ -82,6 +82,7 @@
  opts.Add('TMV_LINK','File that contains the linking instructions for TMV','')
  opts.Add('FFTW_DIR','Explicitly give the fftw3 prefix','')
@@ -10,18 +10,19 @@ index
  
  opts.Add(PathVariable('EXTRA_INCLUDE_PATH',
           'Extra paths for header files (separated by : if more than 1)',
-@@ -1050,6 +1051,10 @@
+@@ -1050,6 +1051,11 @@
  """
      config.Message('Checking if we can build against Python... ')
  
 +    print "sfd show dyld"
++    os.system("echo $DYLD_FALLBACK_LIBRARY_PATH")
 +    print config.env['DYLD_FALLBACK_LIBRARY_PATH']
 +    print "done showing sfd dyld"
 +
      # First check the python include directory -- see if we can compile the module.
      source_file2 = "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
      result, py_inc = TryScript(config,source_file2,python)
-@@ -1572,6 +1577,9 @@
+@@ -1572,6 +1578,9 @@
  def DoPyChecks(config):
      # These checks are only relevant for the pysrc compilation:
  
@@ -31,7 +32,7 @@ index
      config.CheckPython()
      config.CheckPyTMV()
      config.CheckNumPy()
-@@ -1608,6 +1616,11 @@
+@@ -1608,6 +1617,11 @@
      Configure the system
      """
  
