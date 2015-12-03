@@ -50,3 +50,11 @@ index
      # Add some extra paths
      AddExtraPaths(env)
  
+@@ -1690,6 +1710,7 @@
+ # add it as a builder to env.
+ def BuildExecutableScript(target, source, env):
+     for i in range(len(source)):
++        print "sfd shebang: ",env['PYTHON']
+         f = open(str(target[i]), "w")
+         f.write( '#!' + env['PYTHON'] + '\n' )
+         f.write(source[i].get_contents())
