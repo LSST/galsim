@@ -28,9 +28,9 @@ index
 +    cmd = "export SFD_SILLY_PATH=%s" % config.env['FALLBACK']
 +    print "sfd in checks executing"
 +    print cmd
-+    os.environ['SFD_SILLY_PATH'] = config.env['FALLBACK']
++    os.environ['DYLD_FALLBACK_LIBRARY_PATH'] = config.env['FALLBACK']
 +    print "sfd DYLD in checks"
-+    os.system("echo $SFD_SILLY_PATH")
++    os.system("echo $DYLD_FALLBACK_LIBRARY_PATH")
 +    print "sfd done with DYLD in checks"
      config.CheckPython()
      config.CheckPyTMV()
