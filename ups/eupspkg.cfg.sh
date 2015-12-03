@@ -1,10 +1,13 @@
 pathToPython=$(which python)
 pathToPythonLib="${pathToPython%bin/python}/lib"
 
+export DYLD_FALLBACK_LIBRARY_PATH=$pathToPythonLib:$DYLD_FALLBACK_LIBRARY_PATH
+
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR\
 " PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR\
 "/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"\
 " FFTW_DIR="$FFTW_DIR\
+" PYTHON="$pathToPython\
 " FALLBACK="$pathToPythonLib\
 " LINKFLAGS=-Wl,-rpath,"$BOOST_DIR/lib
 
