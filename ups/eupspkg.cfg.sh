@@ -3,6 +3,15 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="
 pathToPython=$(which python)
 export DYLD_FALLBACK_LIBRARY_PATH="${pathToPython%bin/python}/lib"
 
+prep()
+{
+    default_prep
+
+    if [[ $OSTYPE != darwin* ]]; then
+        rm $PWD/ups/GalSim.table
+    fi
+}
+
 install()
 {
     default_install
