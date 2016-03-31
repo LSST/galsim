@@ -1,10 +1,22 @@
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"
 
 pathToPython=$(which python)
-export DYLD_FALLBACK_LIBRARY_PATH="${pathToPython%bin/python}/lib"
+pathToPythonLib="${pathToPython%bin/python}/lib"
+export DYLD_FALLBACK_LIBRARY_PATH=$pathToPythonLib
 
 build()
 {
+
+    # test to see if we are running on OSX
+    if [[ $OSTYPE == darwin* ]]; then
+        version=${OSTYPE#darwin}
+
+        # now, test to see if we are in El Capitan (or later)
+        if [[ $version -ge 15 ]]; then
+            install_name_tool -id @rpath/libpython2.7.dylib $pathToPythonLib/libpython2.7.dylib
+        fi
+    fi
+
     scons DYLD_LIBRARY_PATH=$LSST_LIBRARY_PATH DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH -j$NJOBS prefix="$PREFIX" version="$VERSION" cc="$CC"
 
 }
