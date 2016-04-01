@@ -2,9 +2,9 @@ export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="
 
 pythonLibDir=$(python -c "import sysconfig; print sysconfig.get_config_var('LIBDIR')")
 
-pythonLib=$(python -c "import sysconfig; print sysconfig.get_config_var('LDLIB')")
+pythonLib=$(python -c "import sysconfig; print sysconfig.get_config_var('LDLIBRARY')")
 
-pythonLibFullPath=$(python -c "import sysconfig, os; print os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('LDLIB'))")
+pythonLibFullPath=$(python -c "import sysconfig, os; print os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('LDLIBRARY'))")
 
 export DYLD_FALLBACK_LIBRARY_PATH=$pythonLibDir
 
