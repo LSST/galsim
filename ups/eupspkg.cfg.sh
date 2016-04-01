@@ -6,7 +6,7 @@ pythonLib=$(python -c "import sysconfig; print sysconfig.get_config_var('LDLIBRA
 
 pythonLibFullPath=$(python -c "import sysconfig, os; print os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('LDLIBRARY'))")
 
-export DYLD_FALLBACK_LIBRARY_PATH=$pythonLibDir
+export DYLD_FALLBACK_LIBRARY_PATH="$pythonLibDir"
 
 galsim_build_failure(){
     # Print an explanatory message of the install fails while
@@ -79,14 +79,14 @@ build()
                     galsim_build_failure "usr"
 
                 else
-                    install_name_tool -id @rpath/$pythonLib $pythonLibFullPath \
+                    install_name_tool -id @rpath/"$pythonLib" "$pythonLibFullPath" \
                     || galsim_build_failure "install_name_tool"
                 fi
             fi
         fi
     fi
 
-    scons DYLD_LIBRARY_PATH=$LSST_LIBRARY_PATH DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH -j$NJOBS prefix="$PREFIX" version="$VERSION" cc="$CC"
+    scons DYLD_LIBRARY_PATH="$LSST_LIBRARY_PATH" DYLD_FALLBACK_LIBRARY_PATH="$DYLD_FALLBACK_LIBRARY_PATH" -j$NJOBS prefix="$PREFIX" version="$VERSION" cc="$CC"
 
 }
 
@@ -96,7 +96,7 @@ install()
     cp -r include $PREFIX/
 
     if [[ $OSTYPE == darwin* ]]; then
-        install_name_tool -add_rpath $DYLD_FALLBACK_LIBRARY_PATH "$PREFIX"/lib/python/galsim/_galsim.so
-        install_name_tool -change $pythonLib @rpath/$pythonLib "$PREFIX"/lib/python/galsim/_galsim.so
+        install_name_tool -add_rpath "$DYLD_FALLBACK_LIBRARY_PATH" "$PREFIX"/lib/python/galsim/_galsim.so
+        install_name_tool -change "$pythonLib" @rpath/"$pythonLib" "$PREFIX"/lib/python/galsim/_galsim.so
     fi
 }
