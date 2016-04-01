@@ -66,7 +66,7 @@ build()
             # now investigate whether the libpython2.7.dylib has an appropriate
             # loader address
 
-            selfAddress=$(otool -D $pythonLibFullPath)
+            selfAddress=$(otool -D "$pythonLibFullPath")
             selfAddressStripped=$(echo "${selfAddress#$pythonLibFullPath:}" | tr -d [:space:])
 
             if [[ $selfAddressStripped == $pythonLib ]]; then
