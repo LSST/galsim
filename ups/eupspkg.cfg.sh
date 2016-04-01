@@ -1,7 +1,12 @@
 export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"
 
-pathToPythonLib=$(python -c "import sysconfig; print sysconfig.get_config_var('LIBDIR')")
-export DYLD_FALLBACK_LIBRARY_PATH=$pathToPythonLib
+pythonLibDir=$(python -c "import sysconfig; print sysconfig.get_config_var('LIBDIR')")
+
+pythonLib=$(python -c "import sysconfig; print sysconfig.get_config_var('LDLIB')")
+
+pythonLibFullPath=$(python -c "import sysconfig, os; print os.path.join(sysconfig.get_config_var('LIBDIR'), sysconfig.get_config_var('LDLIB'))")
+
+export DYLD_FALLBACK_LIBRARY_PATH=$pythonLibDir
 
 galsim_build_failure(){
     # Print an explanatory message of the install fails while
@@ -18,19 +23,19 @@ galsim_build_failure(){
 
     echo " "
     echo "NOTE FROM LSST: this probably will not work"
-    echo "It appears that your libpython2.7.dylib does not have"
+    echo "It appears that your "$pythonLib" does not have"
     echo "a correct loader path."
     echo " "
 
     if [[ $2 == "usr" ]]; then
-        echo "Unfortunately, the libpython2.7.dylib you are"
+        echo "Unfortunately, the "$pythonLib" you are"
         echo "building against appears to be in /usr/, so the"
         echo "eups distrib automatic build system is not going"
         echo "to try to fix it."
 
     elif [[ $2 == "install_name_tool" ]]; then
         echo "Unfortunately, attempting to run install_name_tool"
-        echo "on the libpython2.7.dylib against which you are building"
+        echo "on the "$pythonLib" against which you are building"
         echo "failed.  You may not have adequate permissions"
 
     else
@@ -63,22 +68,22 @@ build()
 
             # now investigate whether the libpython2.7.dylib has an appropriate
             # loader address
-            pythonLib=$pathToPythonLib/libpython2.7.dylib
-            selfAddress=$(otool -D $pythonLib)
-            selfAddressStripped=$(echo "${selfAddress#$pythonLib:}" | tr -d [:space:])
 
-            if [[ $selfAddressStripped == "libpython2.7.dylib" ]]; then
+            selfAddress=$(otool -D $pythonLibFullPath)
+            selfAddressStripped=$(echo "${selfAddress#$pythonLibFullPath:}" | tr -d [:space:])
 
-                if [[ $pythonLib == *"/usr/"* ]]; then
+            if [[ $selfAddressStripped == $pythonLib ]]; then
+
+                if [[ $pythonLibFullPath == *"/usr/"* ]]; then
 
                     # we are using a library in /usr/
                     # we will not try to fix it
 
-                    galsim_build_failure $pythonLib "usr"
+                    galsim_build_failure $pythonLibFullPath "usr"
 
                 else
-                    install_name_tool -id @rpath/libpython2.7.dylib $pythonLib \
-                    || galsim_build_failure $pythonLib "install_name_tool"
+                    install_name_tool -id @rpath/$pythonLib $pythonLibFullPath \
+                    || galsim_build_failure $pythonLibFullPath "install_name_tool"
                 fi
             fi
         fi
@@ -95,6 +100,6 @@ install()
 
     if [[ $OSTYPE == darwin* ]]; then
         install_name_tool -add_rpath $DYLD_FALLBACK_LIBRARY_PATH "$PREFIX"/lib/python/galsim/_galsim.so
-        install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib "$PREFIX"/lib/python/galsim/_galsim.so
+        install_name_tool -change $pythonLib @rpath/$pythonLib "$PREFIX"/lib/python/galsim/_galsim.so
     fi
 }
