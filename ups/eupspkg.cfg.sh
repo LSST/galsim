@@ -12,10 +12,7 @@ galsim_build_failure(){
     # Print an explanatory message of the install fails while
     # trying to apply the install_name_tool fix to libpython2.7.dylib
     #
-    # $1 should be the full name of the libpython2.7.dylib we are
-    # trying to build against
-    #
-    # $2 should be a string indicating the nature of the failure:
+    # $1 should be a string indicating the nature of the failure:
     # 'usr' if the build failed because libpython2.7.dylib appears
     #       to be in /usr/
     #  'install_name_tool' if the build failed when trying to run
@@ -27,13 +24,13 @@ galsim_build_failure(){
     echo "a correct loader path."
     echo " "
 
-    if [[ $2 == "usr" ]]; then
+    if [[ $1 == "usr" ]]; then
         echo "Unfortunately, the "$pythonLib" you are"
         echo "building against appears to be in /usr/, so the"
         echo "eups distrib automatic build system is not going"
         echo "to try to fix it."
 
-    elif [[ $2 == "install_name_tool" ]]; then
+    elif [[ $1 == "install_name_tool" ]]; then
         echo "Unfortunately, attempting to run install_name_tool"
         echo "on the "$pythonLib" against which you are building"
         echo "failed.  You may not have adequate permissions"
@@ -46,7 +43,7 @@ galsim_build_failure(){
 
     echo " "
     echo "FYI: you are trying to build against"
-    echo $1
+    echo $pythonLibFullPath
     echo " "
 
     echo "We will proceed with the build.  If it fails"
@@ -79,11 +76,11 @@ build()
                     # we are using a library in /usr/
                     # we will not try to fix it
 
-                    galsim_build_failure $pythonLibFullPath "usr"
+                    galsim_build_failure "usr"
 
                 else
                     install_name_tool -id @rpath/$pythonLib $pythonLibFullPath \
-                    || galsim_build_failure $pythonLibFullPath "install_name_tool"
+                    || galsim_build_failure "install_name_tool"
                 fi
             fi
         fi
