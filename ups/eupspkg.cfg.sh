@@ -5,19 +5,51 @@ pathToPythonLib="${pathToPython%bin/python}/lib"
 export DYLD_FALLBACK_LIBRARY_PATH=$pathToPythonLib
 
 galsim_build_failure(){
+    # Print an explanatory message of the install fails while
+    # trying to apply the install_name_tool fix to libpython2.7.dylib
+    #
+    # $1 should be the full name of the libpython2.7.dylib we are
+    # trying to build against
+    #
+    # $2 should be a string indicating the nature of the failure:
+    # 'usr' if the build failed because libpython2.7.dylib appears
+    #       to be in /usr/
+    #  'install_name_tool' if the build failed when trying to run
+    #       install_name_tool in libpython2.7.dylib
+
     echo " "
-    echo "WARNING: this probably will not work"
+    echo "NOTE FROM LSST: this probably will not work"
     echo "It appears that your libpython2.7.dylib does not have"
     echo "a correct loader path."
-    echo "Unfortunately, the libpyton2.7.dylib you are"
-    echo "building against (i.e."
+    echo " "
+
+    if [[ $2 == "usr" ]]; then
+        echo "Unfortunately, the libpyton2.7.dylib you are"
+        echo "building against appears to be in /usr/, so the"
+        echo "eups distrib automatic build system is not going"
+        echo "to try to fix it."
+
+    elif [[ $2 == "install_name_tool" ]]; then
+        echo "Unfortunately, attempting to run install_name_tool"
+        echo "on the libpython2.7.dylib against which you are building"
+        echo "failed.  You may not have adequate permissions"
+
+    else
+        echo "It is unclear what the problem is,"
+        echo "but the eups distrib automatic build system cannot"
+        echo "fix the loader path."
+    fi
+
+    echo " "
+    echo "FYI: you are trying to build against"
     echo $1
-    echo ") appears to be in /usr/, so the eups distrib"
-    echo "automatic build system is not going to try to fix"
-    echo "it.  We will proceed with the build.  If it fails"
+    echo " "
+
+    echo "We will proceed with the build.  If it fails"
     echo "on GalSim, try consulting"
     echo "http://stackoverflow.com/questions/23771608/trouble-installing-galsim-on-osx-with-anaconda"
     echo "for a likely fix."
+    echo " "
 }
 
 build()
@@ -43,10 +75,11 @@ build()
                     # we are using a library in /usr/
                     # we will not try to fix it
 
-                    galsim_build_failure $pythonLib
+                    galsim_build_failure $pythonLib "usr"
 
                 else
-                    install_name_tool -id @rpath/libpython2.7.dylib $pythonLib
+                    install_name_tool -id @rpath/libpython2.7.dylib $pythonLib \
+                    || galsim_build_failure $pythonLib "install_name_tool"
                 fi
             fi
         fi
