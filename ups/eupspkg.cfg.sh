@@ -24,7 +24,7 @@ galsim_build_failure(){
     echo " "
 
     if [[ $2 == "usr" ]]; then
-        echo "Unfortunately, the libpyton2.7.dylib you are"
+        echo "Unfortunately, the libpython2.7.dylib you are"
         echo "building against appears to be in /usr/, so the"
         echo "eups distrib automatic build system is not going"
         echo "to try to fix it."
