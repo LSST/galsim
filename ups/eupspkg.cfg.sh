@@ -4,6 +4,22 @@ pathToPython=$(which python)
 pathToPythonLib="${pathToPython%bin/python}/lib"
 export DYLD_FALLBACK_LIBRARY_PATH=$pathToPythonLib
 
+galsim_build_failure(){
+    echo " "
+    echo "WARNING: this probably will not work"
+    echo "It appears that your libpython2.7.dylib does not have"
+    echo "a correct loader path."
+    echo "Unfortunately, the libpyton2.7.dylib you are"
+    echo "building against (i.e."
+    echo $1
+    echo ") appears to be in /usr/, so the eups distrib"
+    echo "automatic build system is not going to try to fix"
+    echo "it.  We will proceed with the build.  If it fails"
+    echo "on GalSim, try consulting"
+    echo "http://stackoverflow.com/questions/23771608/trouble-installing-galsim-on-osx-with-anaconda"
+    echo "for a likely fix."
+}
+
 build()
 {
 
@@ -23,21 +39,11 @@ build()
             if [[ $selfAddressStripped == "libpython2.7.dylib" ]]; then
 
                 if [[ $pythonLib == *"/usr/"* ]]; then
+
                     # we are using a library in /usr/
                     # we will not try to fix it
-                    echo " "
-                    echo "WARNING: this probably will not work"
-                    echo "It appears that your libpython2.7.dylib does not have"
-                    echo "a correct loader path."
-                    echo "Unfortunately, the libpyton2.7.dylib you are"
-                    echo "building against (i.e."
-                    echo $pythonLib
-                    echo ") appears to be in /usr/, so the eups distrib"
-                    echo "automatic build system is not going to try to fix"
-                    echo "it.  We will proceed with the build.  If it fails"
-                    echo "on GalSim, try consulting"
-                    echo "http://stackoverflow.com/questions/23771608/trouble-installing-galsim-on-osx-with-anaconda"
-                    echo "for a likely fix."
+
+                    galsim_build_failure $pythonLib
 
                 else
                     install_name_tool -id @rpath/libpython2.7.dylib $pythonLib
