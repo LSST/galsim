@@ -3,6 +3,7 @@ setupRequired(pyfits)
 setupRequired(boost)
 setupRequired(fftw)
 setupRequired(tmv)
+setupRequired(astropy)
 
 envPrepend(PYTHONPATH, ${PRODUCT_DIR})
 envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
