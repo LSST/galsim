@@ -15,7 +15,7 @@ if [[ $OSTYPE == darwin* ]]; then
 	# with / (absolute) or @ (in which case it's most likely a @rpath).
 	# Note that $LIBPYTHON_DYLIB may not exist (e.g., if Python lib has
 	# been built as a framework -- like /usr/bin/python)
-	LIBPYTHON_DYLIB=$(python -c "import sysconfig, os.path; print os.path.join(*sysconfig.get_config_vars('LIBDIR', 'LDLIBRARY'))")
+	LIBPYTHON_DYLIB=$(python -c "import sysconfig, os.path; print(os.path.join(*sysconfig.get_config_vars('LIBDIR', 'LDLIBRARY')))")
 	if [[ -f "$LIBPYTHON_DYLIB" ]]; then
 		LIBPYTHON_DYLIB_INSTNAME=$(otool -X -D "$LIBPYTHON_DYLIB")
 		if [[ ! $LIBPYTHON_DYLIB_INSTNAME =~ [/@].* ]]; then
@@ -28,7 +28,7 @@ if [[ $OSTYPE == darwin* ]]; then
 		# the build to pass successfully. We'll patch the resultant _galsim.so in the build() phase,
 		# enabling it to find the correct libpython*.dylib w/o the ened to set DYLD_FALLBACK_LIBRARY_PATH
 		# at runtime
-		DYLD_FALLBACK_LIBRARY_PATH=$(python -c "import sysconfig; print sysconfig.get_config_var('LIBDIR')")
+		DYLD_FALLBACK_LIBRARY_PATH=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 		export SCONSFLAGS+=" DYLD_FALLBACK_LIBRARY_PATH='$DYLD_FALLBACK_LIBRARY_PATH'"
 	fi
 fi
