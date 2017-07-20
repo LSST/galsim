@@ -1,0 +1,83 @@
+diff --git a/src/SConscript.orig b/src/SConscript
+index 619e684..156f805 100644
+--- a/src/SConscript.orig
++++ b/src/SConscript
+@@ -1,5 +1,5 @@
+ # vim: set filetype=python :
+-
++from __future__ import print_function
+ import os, sys
+ import glob
+ 
+@@ -11,7 +11,8 @@ try:
+ except:
+     # If SCons is using an old python (2.4 is relatively common still), then the above may fail.
+     # In this case, we need to be a little trickier.
+-    execfile(os.path.join(GetBuildPath('#galsim'),'_version.py'))
++    filename = os.path.join(GetBuildPath('#galsim'),'_version.py')
++    exec(compile(open(filename, "rb").read(), filename, 'exec'), globals(), locals())
+     version = __version__
+     version_info = __version_info__
+ 
+@@ -82,7 +83,7 @@ for d in subdirs:
+         lib_files += [os.path.join(d,f)]
+ 
+ if env1['MEM_TEST']:
+-    print 'Using mmgr.cpp'
++    print('Using mmgr.cpp')
+     # put mmgr.cpp first, so its static variable is the first one registered.
+     # otherwise the memory leak reports a bunch of static variables being leaks.
+     lib_files.insert(0, 'mmgr.cpp')
+@@ -90,7 +91,7 @@ if env1['MEM_TEST']:
+ # Library file containing generic code
+ obj_lib = env1.SharedObject(lib_files)
+ 
+-print 'GalSim version ',version
++print('GalSim version ',version)
+ 
+ # Make sure the version tuple has 3 elements.
+ if len(version_info) == 2:
+@@ -118,19 +119,19 @@ if sys.platform == 'darwin':
+     env1.Replace(SHLIBSUFFIX = '.%s.%s.dylib'%compat_version)
+ 
+ elif sys.platform.startswith('linux'):  # Should work for both linux2 and linux3
+-    # On linux, we don't need to include the other libraries here.  They need to be 
++    # On linux, we don't need to include the other libraries here.  They need to be
+     # linked for compiling any executable, but not for building the library.
+-    # However, if any of the other libraries are static, it causes an error on some 
++    # However, if any of the other libraries are static, it causes an error on some
+     # systems to include them here with the usual -llib_name.  But we do need to
+     # include the static libraries here, since python won't be able to load them
+-    # dynamically at run time and we need the resolve the symbols from them that 
++    # dynamically at run time and we need the resolve the symbols from them that
+     # we use.  Otherwise we get undefined symbol errors when importing galsim.
+-    # To do this, we need the full path name to the library file.  So we loop 
+-    # through the library search path looking for each library.  If there is a 
+-    # shared library, we're fine, but if not and we find a static library, then 
+-    # we need to include it explicitly in the linking step for libgalsim.so. 
+-    # This may fail if the static libraries were not compiled if -fPIC, but I 
+-    # don't currently know a way to check for this.  
++    # To do this, we need the full path name to the library file.  So we loop
++    # through the library search path looking for each library.  If there is a
++    # shared library, we're fine, but if not and we find a static library, then
++    # we need to include it explicitly in the linking step for libgalsim.so.
++    # This may fail if the static libraries were not compiled if -fPIC, but I
++    # don't currently know a way to check for this.
+     # Update: Some linux systems do require the shared libraries to be linked here,
+     # and it doesn't seem to be a problem for the ones that don't require it.
+     # Still need the static libraries to be special though.
+@@ -153,7 +154,7 @@ elif sys.platform.startswith('linux'):  # Should work for both linux2 and linux3
+ 
+             static_lib_name = os.path.join(dir,'lib' + lib + '.a')
+             if os.path.isfile(static_lib_name) and os.access(static_lib_name, os.R_OK):
+-                print 'Found static library: ',static_lib_name
++                print('Found static library: ',static_lib_name)
+                 new_libs += [ File(static_lib_name) ]
+                 found = True
+                 break
+@@ -235,5 +236,3 @@ if 'uninstall' in COMMAND_LINE_TARGETS:
+ 
+     for f in libfiles:
+         env1.Alias('uninstall', env1.Command(f, None, deltarget))
+-
+-
