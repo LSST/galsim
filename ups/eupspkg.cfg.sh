@@ -1,4 +1,4 @@
-#export SCONSFLAGS=$SCONSFLAGS" USE_UNKNOWN_VARS=true TMV_DIR="$TMV_DIR" PREFIX="$PREFIX" PYPREFIX="$PREFIX"/lib/python EXTRA_LIB_PATH="$TMV_DIR"/lib EXTRA_INCLUDE_PATH="$TMV_DIR"/include"
+TAP_TAR_OPTIONS="--exclude ups"
 SCONSFLAGS+=" PREFIX=$PREFIX PYPREFIX=$PREFIX/lib/python"
 SCONSFLAGS+=" TMV_DIR=$TMV_DIR EXTRA_LIB_PATH=$TMV_DIR/lib EXTRA_INCLUDE_PATH=$TMV_DIR/include"
 SCONSFLAGS+=" USE_UNKNOWN_VARS=true"
@@ -67,4 +67,18 @@ install()
 	default_install
 
 	cp -r include "$PREFIX/"
+        cd galsim
+        # Grab version from python source.  Libs are only labeled with first two most major version numbers
+        version=$( python -c "from _version import __version__ as version; print('.'.join(version.split('.')[:2]))" )
+        cd -
+	if [[ $OSTYPE == darwin* ]]; then
+		curdir=$(pwd)
+		cd $PREFIX/lib
+		galsim_name=libgalsim.${version}.dylib
+		rm libgalsim.dylib
+		ln -s $galsim_name libgalsim.dylib
+		install_name_tool -id $galsim_name $galsim_name
+		install_name_tool -change $PREFIX/lib/$galsim_name @loader_path/../../$galsim_name python/galsim/_galsim.so
+		cd $curdir
+	fi
 }
