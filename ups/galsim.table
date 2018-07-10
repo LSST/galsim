@@ -1,5 +1,4 @@
 setupRequired(numpy)
-setupRequired(pyfits)
 setupRequired(python_future)
 setupRequired(boost)
 setupRequired(fftw)
