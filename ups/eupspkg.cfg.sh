@@ -36,9 +36,7 @@ fi
 build()
 {
 
-	OLD_C_INCLUDE_PATH="$C_INCLUDE_PATH"
-        export C_INCLUDE_PATH="$EIGEN_DIR/include":"$C_INCLUDE_PATH"
-        echo "SFD C_INCLUDE_PATH $C_INCLUDE_PATH"
+        export SCONSFLAGS="EIGEN_DIR=$EIGEN_DIR/include"
 
 	if [[ ! -z $LIBPYTHON_DYLIB ]]; then
 		echo "LIBPYTHON_DYLIB=$LIBPYTHON_DYLIB"
@@ -65,8 +63,6 @@ build()
 		otool -L "$GALSIM_SO"
 		echo "done."
 	fi
-
-        export C_INCLUDE_PATH="$OLD_C_INCLUDE_PATH"
 }
 
 install()
