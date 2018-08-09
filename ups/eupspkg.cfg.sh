@@ -64,7 +64,10 @@ build()
 
 install()
 {
-	default_install
+	OLD_C_INCLUDE_PATH="$C_INCLUDE_PATH"
+        export C_INCLUDE_PATH="$EIGEN_DIR/include":"$C_INCLUDE_PATH"
+        echo "SFD C_INCLUDE_PATH $C_INCLUDE_PATH"
+        default_install
 
 	cp -r include "$PREFIX/"
         cd galsim
@@ -81,4 +84,5 @@ install()
 		install_name_tool -change $PREFIX/lib/$galsim_name @loader_path/../../$galsim_name python/galsim/_galsim.so
 		cd $curdir
 	fi
+        export C_INCLUDE_PATH="$OLD_C_INCLUDE_PATH"
 }
