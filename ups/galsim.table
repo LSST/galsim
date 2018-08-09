@@ -1,7 +1,6 @@
 setupRequired(numpy)
 setupRequired(python_future)
 setupRequired(fftw)
-setupRequired(tmv)
 setupRequired(astropy)
 
 envPrepend(PYTHONPATH, ${PRODUCT_DIR})
