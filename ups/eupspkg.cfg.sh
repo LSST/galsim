@@ -35,6 +35,11 @@ fi
 
 build()
 {
+
+	OLD_C_INCLUDE_PATH="$C_INCLUDE_PATH"
+        export C_INCLUDE_PATH="$EIGEN_DIR/include":"$C_INCLUDE_PATH"
+        echo "SFD C_INCLUDE_PATH $C_INCLUDE_PATH"
+
 	if [[ ! -z $LIBPYTHON_DYLIB ]]; then
 		echo "LIBPYTHON_DYLIB=$LIBPYTHON_DYLIB"
 		echo "LIBPYTHON_DYLIB_INSTNAME=$LIBPYTHON_DYLIB_INSTNAME"
@@ -60,13 +65,12 @@ build()
 		otool -L "$GALSIM_SO"
 		echo "done."
 	fi
+
+        export C_INCLUDE_PATH="$OLD_C_INCLUDE_PATH"
 }
 
 install()
 {
-	OLD_C_INCLUDE_PATH="$C_INCLUDE_PATH"
-        export C_INCLUDE_PATH="$EIGEN_DIR/include":"$C_INCLUDE_PATH"
-        echo "SFD C_INCLUDE_PATH $C_INCLUDE_PATH"
         default_install
 
 	cp -r include "$PREFIX/"
@@ -84,5 +88,4 @@ install()
 		install_name_tool -change $PREFIX/lib/$galsim_name @loader_path/../../$galsim_name python/galsim/_galsim.so
 		cd $curdir
 	fi
-        export C_INCLUDE_PATH="$OLD_C_INCLUDE_PATH"
 }
