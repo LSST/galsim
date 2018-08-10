@@ -1,0 +1,17 @@
+--- galsim/SConstruct	2018-08-09 19:05:59.000000000 -0700
++++ galsim/SConstruct.new	2018-08-09 19:05:50.000000000 -0700
+@@ -1663,12 +1663,14 @@
+     # For ubuntu Python 3.  cf. #790.
+     # Also https://bugs.launchpad.net/ubuntu/+source/boost1.53/+bug/1231609
+     pyxx = 'boost_python-py%s%s'%tuple(py_version.split('.'))
++    pyxx2 = 'boost_python%s%s'%tuple(py_version.split('.'))
+ 
+     if config.env['PYTHON_VERSION'] >= '3.0':
+         result = (
+             CheckModuleLibs(config,[''],bp_source_file,'check_bp') or
+             CheckModuleLibs(config,['boost_python3'],bp_source_file,'check_bp') or
+             CheckModuleLibs(config,['boost_python3-mt'],bp_source_file,'check_bp') or
++            CheckModuleLibs(config,[pyxx2],bp_source_file,'check_bp') or
+             CheckModuleLibs(config,[pyxx],bp_source_file,'check_bp') )
+     else:
+         result = (
