@@ -5,6 +5,7 @@ setupRequired(fftw)
 setupRequired(astropy)
 setupRequired(pybind11)
 setupRequired(eigen)
+setupRequired(coord)
 
 envPrepend(PYTHONPATH, ${PRODUCT_DIR})
 envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
