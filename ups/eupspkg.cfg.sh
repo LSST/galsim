@@ -37,6 +37,7 @@ build()
 {
 
         export SCONSFLAGS+=" EIGEN_DIR=$EIGEN_DIR/include"
+        export SCONSFLAGS+=" PYBIND11_DIR=$PYBIND11_DIR"
 
 	if [[ ! -z $LIBPYTHON_DYLIB ]]; then
 		echo "LIBPYTHON_DYLIB=$LIBPYTHON_DYLIB"
