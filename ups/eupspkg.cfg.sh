@@ -26,7 +26,7 @@ if [[ $OSTYPE == darwin* ]]; then
 	if [[ $BROKEN_LIBPYTHON_DYLIB = 1 ]]; then
 		# Add the Python library directory to GalSim's DYLD_FALLBACK_LIBRARY_PATH, to enable
 		# the build to pass successfully. We'll patch the resultant _galsim.so in the build() phase,
-		# enabling it to find the correct libpython*.dylib w/o the ened to set DYLD_FALLBACK_LIBRARY_PATH
+		# enabling it to find the correct libpython*.dylib w/o the need to set DYLD_FALLBACK_LIBRARY_PATH
 		# at runtime
 		DYLD_FALLBACK_LIBRARY_PATH=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 		export SCONSFLAGS+=" DYLD_FALLBACK_LIBRARY_PATH='$DYLD_FALLBACK_LIBRARY_PATH'"
