@@ -69,7 +69,7 @@ install()
 {
         default_install
 
-	cp -r include "$PREFIX/"
+        cp -r include "$PREFIX/"
         cd galsim
         # Grab version from python source.  Libs are only labeled with first two most major version numbers
         version=$( python -c "from _version import __version__ as version; print('.'.join(version.split('.')[:2]))" )
