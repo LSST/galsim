@@ -1,6 +1,5 @@
 TAP_TAR_OPTIONS="--exclude ups"
 SCONSFLAGS+=" PREFIX=$PREFIX PYPREFIX=$PREFIX/lib/python"
-SCONSFLAGS+=" TMV_DIR=$TMV_DIR EXTRA_LIB_PATH=$TMV_DIR/lib EXTRA_INCLUDE_PATH=$TMV_DIR/include"
 SCONSFLAGS+=" USE_UNKNOWN_VARS=true"
 export SCONSFLAGS
 
@@ -26,7 +25,7 @@ if [[ $OSTYPE == darwin* ]]; then
 	if [[ $BROKEN_LIBPYTHON_DYLIB = 1 ]]; then
 		# Add the Python library directory to GalSim's DYLD_FALLBACK_LIBRARY_PATH, to enable
 		# the build to pass successfully. We'll patch the resultant _galsim.so in the build() phase,
-		# enabling it to find the correct libpython*.dylib w/o the ened to set DYLD_FALLBACK_LIBRARY_PATH
+		# enabling it to find the correct libpython*.dylib w/o the need to set DYLD_FALLBACK_LIBRARY_PATH
 		# at runtime
 		DYLD_FALLBACK_LIBRARY_PATH=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
 		export SCONSFLAGS+=" DYLD_FALLBACK_LIBRARY_PATH='$DYLD_FALLBACK_LIBRARY_PATH'"
@@ -35,6 +34,10 @@ fi
 
 build()
 {
+
+        export SCONSFLAGS+=" EIGEN_DIR=$EIGEN_DIR/include"
+        export SCONSFLAGS+=" PYBIND11_DIR=$PYBIND11_DIR"
+
 	if [[ ! -z $LIBPYTHON_DYLIB ]]; then
 		echo "LIBPYTHON_DYLIB=$LIBPYTHON_DYLIB"
 		echo "LIBPYTHON_DYLIB_INSTNAME=$LIBPYTHON_DYLIB_INSTNAME"
@@ -64,9 +67,9 @@ build()
 
 install()
 {
-	default_install
+        default_install
 
-	cp -r include "$PREFIX/"
+        cp -r include "$PREFIX/"
         cd galsim
         # Grab version from python source.  Libs are only labeled with first two most major version numbers
         version=$( python -c "from _version import __version__ as version; print('.'.join(version.split('.')[:2]))" )
